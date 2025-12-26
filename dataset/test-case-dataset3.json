@@ -1,0 +1,17 @@
+[
+  {
+    "task": "Create a JSON policy document that allows an IAM user to read objects from a specific S3 bucket named 'my-app-logs' and list the bucket contents",
+    "format": "json",
+    "solution_criteria": "JSON must be valid IAM policy syntax with correct Version, Statement structure, Effect set to Allow, Principal or Resource specified correctly, and Actions including s3:GetObject and s3:ListBucket for the specified bucket ARN"
+  },
+  {
+    "task": "Write a Python function that takes an AWS CloudWatch log event and extracts the timestamp, log level, and message from a typical application log line format",
+    "format": "python",
+    "solution_criteria": "Function must accept a log event parameter, correctly parse standard log format (timestamp, level, message), handle common log levels (INFO, ERROR, WARN, DEBUG), return structured data (dict or tuple), and include basic error handling for malformed input"
+  },
+  {
+    "task": "Create a regex pattern that validates AWS Lambda function names according to AWS naming rules",
+    "format": "regex",
+    "solution_criteria": "Regex must enforce Lambda naming constraints: 1-64 characters long, alphanumeric characters and hyphens only, cannot start or end with hyphen, case sensitive, and properly anchored to match entire string"
+  }
+]
