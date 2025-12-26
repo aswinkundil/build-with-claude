@@ -1,0 +1,224 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Prompt Evaluation Report</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                line-height: 1.6;
+                margin: 0;
+                padding: 20px;
+                color: #333;
+            }
+            .header {
+                background-color: #f0f0f0;
+                padding: 20px;
+                border-radius: 5px;
+                margin-bottom: 20px;
+            }
+            .summary-stats {
+                display: flex;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            .stat-box {
+                background-color: #fff;
+                border-radius: 5px;
+                padding: 15px;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                flex-basis: 30%;
+                min-width: 200px;
+            }
+            .stat-value {
+                font-size: 24px;
+                font-weight: bold;
+                margin-top: 5px;
+            }
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 20px;
+            }
+            th {
+                background-color: #4a4a4a;
+                color: white;
+                text-align: left;
+                padding: 12px;
+            }
+            td {
+                padding: 10px;
+                border-bottom: 1px solid #ddd;
+                vertical-align: top;
+            }
+            tr:nth-child(even) {
+                background-color: #f9f9f9;
+            }
+            .output-cell {
+                white-space: pre-wrap;
+            }
+            .score {
+                font-weight: bold;
+                padding: 5px 10px;
+                border-radius: 3px;
+                display: inline-block;
+            }
+            .score-high {
+                background-color: #c8e6c9;
+                color: #2e7d32;
+            }
+            .score-medium {
+                background-color: #fff9c4;
+                color: #f57f17;
+            }
+            .score-low {
+                background-color: #ffcdd2;
+                color: #c62828;
+            }
+            .output {
+                overflow: auto;
+                white-space: pre-wrap;
+            }
+
+            .output pre {
+                background-color: #f5f5f5;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                padding: 10px;
+                margin: 0;
+                font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+                font-size: 14px;
+                line-height: 1.4;
+                color: #333;
+                box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+                overflow-x: auto;
+                white-space: pre-wrap; 
+                word-wrap: break-word; 
+            }
+
+            td {
+                width: 20%;
+            }
+            .score-col {
+                width: 80px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="header">
+            <h1>Prompt Evaluation Report</h1>
+            <div class="summary-stats">
+                <div class="stat-box">
+                    <div>Total Test Cases</div>
+                    <div class="stat-value">3</div>
+                </div>
+                <div class="stat-box">
+                    <div>Average Score</div>
+                    <div class="stat-value">8.7 / 10</div>
+                </div>
+                <div class="stat-box">
+                    <div>Pass Rate (≥7)</div>
+                    <div class="stat-value">100.0%</div>
+                </div>
+            </div>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Scenario</th>
+                    <th>Prompt Inputs</th>
+                    <th>Solution Criteria</th>
+                    <th>Output</th>
+                    <th>Score</th>
+                    <th>Reasoning</th>
+                </tr>
+            </thead>
+            <tbody>
+    
+            <tr>
+                <td>Testing with a dense passage containing nested or hierarchical concepts where topics could be extracted at different levels of granularity (e.g., 'machine learning' vs. 'deep neural networks' vs. 'convolutional neural networks'), to evaluate whether the prompt identifies topics at appropriate abstraction levels</td>
+                <td class="prompt-inputs"><strong>content:</strong> Recent advances in deep learning have revolutionized artificial intelligence applications across multiple domains. Convolutional neural networks (CNNs) have become the standard architecture for computer vision tasks, with ResNet and VGG variants demonstrating superior performance in image classification benchmarks. Within the broader machine learning paradigm, supervised learning approaches utilizing backpropagation have proven particularly effective for training deep neural networks on large-scale datasets. Furthermore, transfer learning techniques that leverage pre-trained models have significantly reduced computational requirements while improving generalization across diverse visual recognition tasks, from medical imaging to autonomous vehicle perception systems.</td>
+                <td class="criteria">• Extracts topics at multiple appropriate abstraction levels (e.g., both 'machine learning' and 'convolutional neural networks' rather than only one level)<br>• Includes specific technical topics mentioned (e.g., 'ResNet', 'VGG', 'transfer learning', 'backpropagation')<br>• Avoids over-granularity by not treating every minor technical detail as a separate topic<br>• Returns output as a valid JSON array of strings</td>
+                <td class="output"><pre>```json
+[
+  "Deep learning",
+  "Artificial intelligence",
+  "Convolutional neural networks",
+  "Computer vision",
+  "Image classification",
+  "ResNet",
+  "VGG",
+  "Machine learning",
+  "Supervised learning",
+  "Backpropagation",
+  "Neural networks",
+  "Transfer learning",
+  "Pre-trained models",
+  "Medical imaging",
+  "Autonomous vehicles"
+]
+```</pre></td>
+                <td class="score-col"><span class="score score-high">8</span></td>
+                <td class="reasoning">The solution meets all mandatory requirements: it is a valid JSON array of strings containing topics from the article with no extra commentary. It demonstrates strong adherence to secondary criteria by balancing multiple abstraction levels (deep learning, machine learning, CNNs, ResNet, VGG) and avoiding over-granularity. However, there are two minor issues: one omission of an explicitly mentioned concept (large-scale datasets) and one questionable inclusion (autonomous vehicles as a topic rather than just an application context). These are relatively minor deficiencies that don't undermine the overall quality of the extraction.</td>
+            </tr>
+        
+            <tr>
+                <td>Testing with a passage containing implicit and explicit topics mixed together, where some topics require inference from context while others are explicitly stated, to verify the prompt can distinguish between directly mentioned vs. inferred subject matter</td>
+                <td class="prompt-inputs"><strong>content:</strong> The study of epigenetic mechanisms has revealed how environmental stressors can alter gene expression without changing DNA sequences. Our research examined histone modification patterns in stressed populations, finding elevated levels of H3K27me3 marks associated with chromatin condensation. These findings suggest that nutritional deficiencies, which are prevalent in economically disadvantaged regions, may trigger similar epigenetic responses. Furthermore, the reversibility of these modifications implies potential therapeutic interventions, though the long-term health implications remain unclear and warrant further longitudinal investigation.</td>
+                <td class="criteria">• Explicitly stated topics (epigenetics, histone modifications, gene expression, chromatin) are all included<br>• Inferred topics derived from context (socioeconomic factors, public health, therapeutic applications) are identified<br>• Output is a valid JSON array of strings with no duplicates</td>
+                <td class="output"><pre>```json
+[
+  "epigenetic mechanisms",
+  "gene expression",
+  "environmental stressors",
+  "histone modification",
+  "H3K27me3 marks",
+  "chromatin condensation",
+  "nutritional deficiencies",
+  "economically disadvantaged regions",
+  "epigenetic responses",
+  "reversibility of epigenetic modifications",
+  "therapeutic interventions",
+  "long-term health implications",
+  "longitudinal investigation"
+]
+```</pre></td>
+                <td class="score-col"><span class="score score-high">9</span></td>
+                <td class="reasoning">The solution meets all mandatory requirements: it is a valid JSON array of strings with no duplicates, contains topics mentioned in the article, and includes only topic content without extra commentary. The response contains only the JSON array as required. It successfully captures both explicitly stated topics (epigenetic mechanisms, histone modification, chromatin condensation) and inferred contextual topics (economically disadvantaged regions, therapeutic interventions). However, some topic extractions are unnecessarily verbose or could be more abstractly generalized. The solution is functionally complete and accurate despite minor stylistic considerations.</td>
+            </tr>
+        
+            <tr>
+                <td>Testing with an interdisciplinary passage that spans multiple fields (e.g., environmental science + economics + policy), containing domain-specific jargon and overlapping concepts, to ensure the prompt extracts distinct topics without over-segmentation or conflation</td>
+                <td class="prompt-inputs"><strong>content:</strong> The integration of carbon pricing mechanisms with ecosystem service valuation presents significant challenges for environmental policy design. Market-based instruments such as cap-and-trade systems have demonstrated efficacy in reducing sulfur dioxide emissions, yet their application to biodiversity conservation remains contested due to difficulties in quantifying non-market values and accounting for ecological tipping points. Simultaneously, payment for ecosystem services (PES) schemes in tropical regions have generated revenue for forest conservation while creating new socioeconomic dependencies among smallholder farmers. The heterogeneity of discount rates across stakeholders—where financial institutions prioritize short-term returns while conservation biologists emphasize intergenerational equity—further complicates cost-benefit analyses and regulatory harmonization across jurisdictions.</td>
+                <td class="criteria">• Extracts all distinct topics without conflating overlapping concepts (e.g., carbon pricing and ecosystem valuation should be separate, not merged)<br>• Avoids over-segmentation of closely related subtopics (e.g., cap-and-trade and sulfur dioxide reduction should not be listed as independent topics)<br>• Captures domain-specific concepts accurately (e.g., 'payment for ecosystem services', 'tipping points', 'discount rates')<br>• Returns results as a JSON array of strings with no additional fields or explanations</td>
+                <td class="output"><pre>```json
+[
+  "Carbon pricing mechanisms",
+  "Ecosystem service valuation",
+  "Environmental policy design",
+  "Cap-and-trade systems",
+  "Biodiversity conservation",
+  "Non-market valuation",
+  "Ecological tipping points",
+  "Payment for ecosystem services (PES)",
+  "Forest conservation",
+  "Smallholder farmers",
+  "Discount rates",
+  "Intergenerational equity",
+  "Cost-benefit analysis",
+  "Regulatory harmonization"
+]
+```</pre></td>
+                <td class="score-col"><span class="score score-high">9</span></td>
+                <td class="reasoning">The solution fully satisfies all mandatory requirements: it is a JSON array of strings containing topics from the article with no extra commentary. Regarding secondary criteria, the extraction demonstrates strong understanding of domain concepts and appropriate granularity. The main consideration is whether all distinct topics have been captured—the passage explicitly discusses sulfur dioxide emissions as a concrete example of cap-and-trade success, which could arguably warrant inclusion as a topic. However, this is defensible as an implementation detail rather than a primary topic. The 14 topics extracted are well-chosen and represent the core conceptual landscape of the passage. The solution avoids both under-segmentation and over-segmentation effectively.</td>
+            </tr>
+        
+            </tbody>
+        </table>
+    </body>
+    </html>
+    
