@@ -1,0 +1,14 @@
+[
+  {
+    "task": "Create a Python function that parses an S3 bucket ARN and returns the bucket name. The function should extract the bucket name from ARNs in the format 'arn:aws:s3:::bucket-name'",
+    "format": "python"
+  },
+  {
+    "task": "Create a JSON configuration object for an AWS Lambda function that runs Python 3.9, has 512MB memory, 30 second timeout, and includes environment variables for DATABASE_URL and LOG_LEVEL",
+    "format": "json"
+  },
+  {
+    "task": "Write a regex pattern that matches valid AWS region names (e.g., us-east-1, eu-west-2, ap-southeast-1) which follow the format of 2-3 lowercase letters, hyphen, cardinal direction, hyphen, and a number",
+    "format": "regex"
+  }
+]
